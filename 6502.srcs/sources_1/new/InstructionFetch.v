@@ -42,6 +42,7 @@ module InstructionFetch
         if (cs) fetch_res[0+:WORD_SIZE] <= ram[{addr_hi, addr_lo}];
         else fetch_res <= rom[{addr_hi, addr_lo}];
     end
-    assign ir = fetch_res[0+:WORD_SIZE];
-    assign dr = fetch_res[WORD_SIZE+:WORD_SIZE];
+    // FIX?: These should be swapped?
+    assign dr = fetch_res[0+:WORD_SIZE];
+    assign ir = fetch_res[WORD_SIZE+:WORD_SIZE];
 endmodule

@@ -28,5 +28,5 @@ module GPRegister(
 );
     reg [7:0] data;
     assign bus = bus_en ? data : 8'bz;
-    always @ (posedge clk) if (load) data <= bus;
+    always @ (*) if (load) data <= bus;
 endmodule

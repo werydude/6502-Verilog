@@ -38,9 +38,6 @@ module ALU(
     //input asls,
     
     */
-    
-    input ex,
-    input load_out,
     // Status
     output V, C,
         
@@ -50,25 +47,22 @@ module ALU(
 );
     reg [7:0] res = 8'b0;
     reg [1:0] status = 2'b0;
-    assign out = load_out ? res[7:0] : 8'bz;
+    assign out = res[7:0];
     assign {V,C} = status;
-    always @ (posedge clk) begin
-        if (!ex);
-        else begin
-            case (ctrl)
-                3'b000:  begin // Sums
-                            {status[0], res} = A + B + cin;                 
-                            status[1] = (A[7] != res[7]) && (B[7] != res[7]);
-                        end
-                3'b001:  res = A & B;
-                3'b010:  res = A ^ B;
-                3'b011:  res = A | B;
-                3'b100:  res = A << B;
-                3'b101:  res = A >> B;
-                3'b110:  res = A <<< B;
-                3'b111:  res = A >>> B;
-            endcase
-        end
+    always @ (*) begin
+        case (ctrl)
+            3'b000:  begin // Sums
+                        {status[0], res} = A + B + cin;                 
+                        status[1] = (A[7] != res[7]) && (B[7] != res[7]);
+                    end
+            3'b001:  res = A & B;
+            3'b010:  res = A ^ B;
+            3'b011:  res = A | B;
+            3'b100:  res = A << B;
+            3'b101:  res = A >> B;
+            3'b110:  res = A <<< B;
+            3'b111:  res = A >>> B;
+        endcase
     end
     
 endmodule

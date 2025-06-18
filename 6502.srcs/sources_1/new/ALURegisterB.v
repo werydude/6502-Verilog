@@ -32,7 +32,7 @@ module ALURegisterB(
 );
     reg [7:0] data;
     assign out = data;
-    always @ (posedge clk) begin
+    always @ (*) begin
         if (load_data)  data <= data_bus;
         if (load_datab) data <= datab_bus;
         if (load_addr)  data <= addr_bus;

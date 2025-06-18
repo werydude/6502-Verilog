@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 06/05/2025 08:43:21 PM
+// Create Date: 06/13/2025 09:54:06 AM
 // Design Name: 
-// Module Name: ALURegisterA
+// Module Name: DataReg
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,17 +20,20 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module ALURegisterA(
+module DataReg(
     input clk,
-    input [7:0] bus,
-    input load,
-    input zero,
-    output [7:0] out
+    input [7:0] data_in,
+    input db_en,
+    input adl_en,
+    input adh_en,
+    output [7:0] db,
+    output [7:0] adl,
+    output [7:0] adh
 );
-    reg [7:0] data;
-    assign out = data;
-    always @ (*) begin
-        if (load) data <= bus;
-        if (zero) data <= 8'b0;
-    end
+    reg [7:0] data = 8'b0;
+    assign db = db_en ? (data | 8'b0) : 8'bz;
+    assign adl = adl_en ? data : 8'bz;
+    assign adh = adh_en ? data : 8'bz;
+    always @ (negedge clk) data <= data_in;
+
 endmodule

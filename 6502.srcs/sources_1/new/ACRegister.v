@@ -31,5 +31,5 @@ module ACRegister(
     reg [7:0] data;
     assign sb  = sb_en ? data : 8'bz;
     assign db_out = db_en ? data : 8'bz;
-    always @(posedge clk) if (load_sb) data <= sb;
+    always @(*) if (load_sb) data <= sb;
 endmodule

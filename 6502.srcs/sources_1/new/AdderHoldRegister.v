@@ -24,12 +24,14 @@ module AdderHoldRegister(
     input clk,
     input [7:0] alu_res,
     input addr_en,
-    input bus_en,
+    input bus7_en,
+    input bus06_en,
     output [7:0] addr,
     output [7:0] bus
 );
-    reg [7:0] data;
-    assign bus  = bus_en ? data : 8'bz;
-    assign addr = addr_en ? data : 8'bz;
-    always @(posedge clk) data <= alu_res;
+    reg [6:0] data06;
+    reg data7;
+    assign bus  = {(bus7_en ? data7 : 1'bz), (bus06_en ? data06 : 7'bz)};
+    assign addr = addr_en ? {data7, data06} : 8'bz;
+    always @(negedge clk) {data7, data06} <= alu_res;
 endmodule

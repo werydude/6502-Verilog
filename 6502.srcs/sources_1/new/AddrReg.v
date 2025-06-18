@@ -28,5 +28,6 @@ module AddrReg(
 );
     reg [7:0] data;
     assign addr = data;
-    always @ (posedge clk) if (load) data <= bus;
+    //always @ (posedge clk) if (load) data <= bus;
+    always @ (posedge clk) data <= bus; // TEMP
 endmodule
